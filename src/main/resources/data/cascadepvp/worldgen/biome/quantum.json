@@ -1,0 +1,36 @@
+{
+  "temperature": 0.5,
+  "downfall": 0,
+  "has_precipitation": false,
+  "temperature_modifier": "none",
+  "effects": {
+    "sky_color": 197379,
+    "fog_color": 197379,
+    "water_color": 4784240,
+    "water_fog_color": 4194447,
+    "grass_color": 5832959,
+    "foliage_color": 9175295,
+    "grass_color_modifier": "none",
+    "additions_sound": {
+      "sound": "minecraft:block.bell.resonate",
+      "tick_chance": 0.002
+    },
+    "music": {
+      "sound": "minecraft:ambient.cave",
+      "min_delay": 5,
+      "max_delay": 15,
+      "replace_current_music": true
+    },
+    "particle": {
+      "options": {
+        "type": "minecraft:dripping_obsidian_tear"
+      },
+      "probability": 0.001
+    }
+  },
+  "creature_spawn_probability": 0,
+  "spawners": {},
+  "spawn_costs": {},
+  "carvers": {},
+  "features": []
+}

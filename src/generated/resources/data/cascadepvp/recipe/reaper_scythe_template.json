@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "A": {
+      "item": "minecraft:ghast_tear"
+    },
+    "B": {
+      "item": "minecraft:blaze_rod"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "pattern": [
+    "DDD",
+    "ADB",
+    "DDD"
+  ],
+  "result": {
+    "count": 1,
+    "id": "cascadepvp:reaper_scythe_template"
+  }
+}

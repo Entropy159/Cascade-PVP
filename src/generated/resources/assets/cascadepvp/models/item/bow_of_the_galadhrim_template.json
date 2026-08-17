@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "cascadepvp:item/bow_of_the_galadhrim_template"
+  }
+}

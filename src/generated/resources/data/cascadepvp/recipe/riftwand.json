@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "A": {
+      "tag": "c:gems/amethyst"
+    },
+    "D": {
+      "tag": "c:gems/diamond"
+    }
+  },
+  "pattern": [
+    "  D",
+    " A ",
+    "A  "
+  ],
+  "result": {
+    "count": 1,
+    "id": "cascadepvp:riftwand"
+  }
+}

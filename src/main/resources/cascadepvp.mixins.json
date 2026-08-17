@@ -1,0 +1,23 @@
+{
+  "required": true,
+  "package": "dev.entropy159.cascadepvp.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "AbstractArrowMixin",
+    "EnderEyeItemMixin",
+    "ServerPlayerGameModeMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  },
+  "mixinextras": {
+    "minVersion": "0.5.3"
+  },
+  "client": [
+    "CompassItemPropertyFunctionMixin",
+    "EntityMixinClient"
+  ]
+}

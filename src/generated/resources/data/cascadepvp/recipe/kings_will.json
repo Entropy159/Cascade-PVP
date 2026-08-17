@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": [],
+  "base": {
+    "item": "minecraft:diamond_sword"
+  },
+  "result": {
+    "count": 1,
+    "id": "cascadepvp:kings_will"
+  },
+  "template": {
+    "item": "cascadepvp:kings_will_template"
+  }
+}

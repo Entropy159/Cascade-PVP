@@ -1,0 +1,6 @@
+{
+  "parent": "cascadepvp:item/boombow",
+  "textures": {
+    "layer0": "cascadepvp:item/boombow/pulling_2"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": [],
+  "base": {
+    "item": "minecraft:diamond_sword"
+  },
+  "result": {
+    "count": 1,
+    "id": "cascadepvp:shadow_karambit"
+  },
+  "template": {
+    "item": "cascadepvp:shadow_karambit_template"
+  }
+}

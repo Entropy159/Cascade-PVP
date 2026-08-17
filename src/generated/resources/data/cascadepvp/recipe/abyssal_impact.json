@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": [],
+  "base": {
+    "item": "minecraft:diamond_axe"
+  },
+  "result": {
+    "count": 1,
+    "id": "cascadepvp:abyssal_impact"
+  },
+  "template": {
+    "item": "cascadepvp:abyssal_impact_template"
+  }
+}

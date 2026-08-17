@@ -1,0 +1,7 @@
+{
+  "parent": "cascadepvp:item/bow_of_the_galadhrim",
+  "textures": {
+    "layer0": "cascadepvp:item/bow_of_the_galadhrim/pulling_0",
+    "layer1": "cascadepvp:item/bow_of_the_galadhrim/pulling_0_overlay"
+  }
+}

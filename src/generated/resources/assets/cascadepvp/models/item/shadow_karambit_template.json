@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "cascadepvp:item/shadow_karambit_template"
+  }
+}

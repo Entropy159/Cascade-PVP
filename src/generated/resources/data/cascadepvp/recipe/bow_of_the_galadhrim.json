@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": [],
+  "base": {
+    "item": "minecraft:bow"
+  },
+  "result": {
+    "count": 1,
+    "id": "cascadepvp:bow_of_the_galadhrim"
+  },
+  "template": {
+    "item": "cascadepvp:bow_of_the_galadhrim_template"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "customGroups": [
+    {
+      "name": "scythe",
+      "items": [
+        "cascadepvp:reaper_scythe"
+      ]
+    }
+  ],
+  "item": {
+    "scythe": {
+      "kind": "SWORD",
+      "customAnimation": [
+        {
+          "type": "attack",
+          "var_1": "attack_1",
+          "var_2": "attack_2",
+          "critical_hit": "attack_critical"
+        },
+        {
+          "type": "mining_v2",
+          "start": "new_mining_st_start",
+          "looping": "new_mining_st_loop",
+          "end": "new_mining_st_end"
+        },
+        {
+          "type": "inspect",
+          "name": "sword_inspect_rework"
+        }
+      ]
+    }
+  }
+}

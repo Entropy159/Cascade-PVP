@@ -1,0 +1,23 @@
+{
+  "customGroups": [
+    {
+      "name": "reverse_grip",
+      "items": [
+        "cascadepvp:shadow_karambit"
+      ]
+    }
+  ],
+  "item": {
+    "reverse_grip": {
+      "kind": "SPEAR",
+      "customAnimation": [
+        {
+          "type": "attack",
+          "var_1": "attack_1",
+          "var_2": "attack_2",
+          "critical_hit": "attack_critical"
+        }
+      ]
+    }
+  }
+}
