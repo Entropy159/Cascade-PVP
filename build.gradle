@@ -85,10 +85,6 @@ configurations {
     runtimeClasspath.extendsFrom localRuntime
 }
 
-jarJar {
-    enable()
-}
-
 dependencies {
     implementation "net.neoforged:neoforge:${neo_version}"
 
