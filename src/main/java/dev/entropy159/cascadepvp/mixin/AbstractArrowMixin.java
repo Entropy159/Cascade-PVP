@@ -37,4 +37,11 @@ public abstract class AbstractArrowMixin extends Projectile {
             removeTag("Explosive");
         }
     }
+
+    @Inject(method = "tick", at = @At("TAIL"))
+    private void despawn(CallbackInfo ci) {
+        if (isNoGravity() && tickCount >= 20 * 60 * 5) {
+            discard();
+        }
+    }
 }

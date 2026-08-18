@@ -18,6 +18,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
@@ -28,7 +29,7 @@ import static dev.entropy159.cascadepvp.CascadePVP.REGISTRATE;
 public class CascadeItems {
     public static final ItemEntry<Item> HEXBLADE_TEMPLATE = REGISTRATE.item("hexblade_template", Item::new).recipe(template(Items.EMERALD_BLOCK, Items.BLAZE_ROD)).register();
     public static final ItemEntry<Item> REAPER_SCYTHE_TEMPLATE = REGISTRATE.item("reaper_scythe_template", Item::new).recipe(template(Items.GHAST_TEAR, Items.BLAZE_ROD)).register();
-    public static final ItemEntry<Item> KINGS_WILL_TEMPLATE = REGISTRATE.item("kings_will_template", Item::new).register();
+    public static final ItemEntry<Item> KINGS_WILL_TEMPLATE = REGISTRATE.item("kings_will_template", Item::new).recipe(template(Items.GOLDEN_APPLE, Items.SUGAR)).register();
     public static final ItemEntry<Item> SHADOW_KARAMBIT_TEMPLATE = REGISTRATE.item("shadow_karambit_template", Item::new).recipe(template(Items.FERMENTED_SPIDER_EYE, Items.GOLDEN_CARROT)).register();
     public static final ItemEntry<Item> ABYSSAL_IMPACT_TEMPLATE = REGISTRATE.item("abyssal_impact_template", Item::new).recipe(template(Items.BREEZE_ROD, Items.IRON_BLOCK)).register();
     public static final ItemEntry<Item> BOOMBOW_TEMPLATE = REGISTRATE.item("boombow_template", Item::new).lang("Sparky Sparky Boom Bow Template").recipe(template(Items.TNT, Items.OBSIDIAN)).register();
@@ -42,7 +43,15 @@ public class CascadeItems {
     public static final ItemEntry<ReaperScytheItem> REAPER_SCYTHE = REGISTRATE.item("reaper_scythe", ReaperScytheItem::new).model(existing()).recipe(upgrade(Items.DIAMOND_SWORD, REAPER_SCYTHE_TEMPLATE)).tag(ItemTags.SWORDS).register();
     public static final ItemEntry<KingsWillItem> KINGS_WILL = REGISTRATE.item("kings_will", KingsWillItem::new).lang("King's Will").model(handheld()).recipe(upgrade(Items.DIAMOND_SWORD, KINGS_WILL_TEMPLATE)).tag(ItemTags.SWORDS).register();
     public static final ItemEntry<ShadowKarambitItem> SHADOW_KARAMBIT = REGISTRATE.item("shadow_karambit", ShadowKarambitItem::new).model(existing()).recipe(upgrade(Items.DIAMOND_SWORD, SHADOW_KARAMBIT_TEMPLATE)).tag(ItemTags.SWORDS).register();
-    public static final ItemEntry<AbyssalImpactItem> ABYSSAL_IMPACT = REGISTRATE.item("abyssal_impact", AbyssalImpactItem::new).model(handheld()).recipe(upgrade(Items.DIAMOND_AXE, ABYSSAL_IMPACT_TEMPLATE)).tag(ItemTags.AXES).register();
+    public static final ItemEntry<AbyssalImpactItem> ABYSSAL_IMPACT = REGISTRATE.item("abyssal_impact", AbyssalImpactItem::new).model((ctx, provider) -> {
+        float scale = 1.3f;
+        provider.handheld(ctx::get).transforms()
+                .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND).rotation(0, -90, 55).scale(scale, scale, scale).translation(0, 8.5f, -0.5f).end()
+                .transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND).rotation(0, 90, -55).scale(scale, scale, scale).translation(0, 8.5f, -0.5f).end()
+                .transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND).rotation(0, 90, -25).scale(scale, scale, scale).translation(1.13f, 3.2f, 1.13f).end()
+                .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND).rotation(0, -90, 25).scale(scale, scale, scale).translation(1.13f, 3.2f, 1.13f).end()
+                .end();
+    }).recipe(upgrade(Items.DIAMOND_AXE, ABYSSAL_IMPACT_TEMPLATE)).tag(ItemTags.AXES).register();
     public static final ItemEntry<BoombowItem> BOOMBOW = REGISTRATE.item("boombow", BoombowItem::new).model(bow()).recipe(upgrade(Items.BOW, BOOMBOW_TEMPLATE)).lang("Sparky Sparky Boom Bow").tag(Tags.Items.TOOLS_BOW, ItemTags.BOW_ENCHANTABLE).register();
     public static final ItemEntry<BowOfTheGaladhrim> BOW_OF_THE_GALADHRIM = REGISTRATE.item("bow_of_the_galadhrim", BowOfTheGaladhrim::new).model(bowOverlay()).color(() -> () -> (stack, index) -> (index == 1 && stack.getOrDefault(CascadeDataComponents.SUPERCHARGED, false)) ? 0xFFFF0000 : 0xFF757575).recipe(template(Items.SPYGLASS, Items.WIND_CHARGE)).recipe(upgrade(Items.BOW, BOW_OF_THE_GALADHRIM_TEMPLATE)).tag(Tags.Items.TOOLS_BOW, ItemTags.BOW_ENCHANTABLE).register();
 
