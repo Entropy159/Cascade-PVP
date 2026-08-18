@@ -92,7 +92,7 @@ dependencies {
 
     implementation "com.tterrag.registrate:Registrate:${registrate_version}"
 
-    runtimeOnly "maven.modrinth:punchy-fpa:${punchy_version}-neoforge,${minecraft_version}"
+    localRuntime "maven.modrinth:punchy-fpa:${punchy_version}-neoforge,${minecraft_version}"
 }
 
 
