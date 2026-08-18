@@ -9,39 +9,59 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(AbstractArrow.class)
 public abstract class AbstractArrowMixin extends Projectile {
+    @Shadow
+    protected int inGroundTime;
+
+    @Shadow
+    protected boolean inGround;
+
     protected AbstractArrowMixin(EntityType<? extends Projectile> entityType, Level level) {
         super(entityType, level);
     }
 
     @Inject(method = "onHitBlock", at = @At("TAIL"))
     private void explodeBlock(BlockHitResult result, CallbackInfo ci) {
-        cascadePVP$explode(true);
+        if (ServerConfig.BOOMBOW_DELAY_TICKS.get() < 1) {
+            cascadePVP$explode();
+        }
     }
 
     @Inject(method = "onHitEntity", at = @At("TAIL"))
     private void explodeEntity(EntityHitResult result, CallbackInfo ci) {
-        cascadePVP$explode(false);
+        cascadePVP$explode();
     }
 
     @Unique
-    private void cascadePVP$explode(boolean checkRemove) {
-        if (!(isRemoved() && checkRemove) && level() instanceof ServerLevel level && getTags().contains("Explosive")) {
-            level.explode(this, position().x, position().y, position().z, ServerConfig.BOOMBOW_EXPLOSION_RADIUS.get(), false, Level.ExplosionInteraction.NONE);
+    private void cascadePVP$explode() {
+        if (level() instanceof ServerLevel level && getTags().contains("Explosive")) {
+            level.explode(this, position().x, position().y, position().z, ServerConfig.BOOMBOW_EXPLOSION_RADIUS.get().floatValue(), false, Level.ExplosionInteraction.NONE);
             removeTag("Explosive");
         }
     }
 
     @Inject(method = "tick", at = @At("TAIL"))
     private void despawn(CallbackInfo ci) {
-        if (isNoGravity() && tickCount >= 20 * 60 * 5) {
+        int delay = ServerConfig.BOOMBOW_DELAY_TICKS.get();
+        if (delay > 0 && inGroundTime >= delay) {
+            cascadePVP$explode();
+        }
+        if (getTags().contains("Expires") && tickCount >= ServerConfig.BOW_OF_THE_GALADHRIM_ARROW_EXPIRATION.get()) {
             discard();
         }
+    }
+
+    @ModifyConstant(method = "tick", constant = @Constant(floatValue = 0.99F))
+    private float airResistance(float constant) {
+        return getTags().contains("NoResistance") ? ServerConfig.BOW_OF_THE_GALADHRIM_AIR_RESISTANCE.get().floatValue() : constant;
     }
 }

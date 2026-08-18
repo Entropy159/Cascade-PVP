@@ -1,5 +1,6 @@
 package dev.entropy159.cascadepvp.items.weapon;
 
+import dev.entropy159.cascadepvp.client.ClientData;
 import dev.entropy159.cascadepvp.config.ServerConfig;
 import dev.entropy159.cascadepvp.items.CascadeItem;
 import dev.entropy159.cascadepvp.registry.CascadeDataComponents;
@@ -13,6 +14,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.common.ItemAbility;
 import org.jetbrains.annotations.NotNull;
@@ -28,7 +30,10 @@ public class BowOfTheGaladhrim extends BowItem implements CascadeItem {
 
     @Override
     public boolean canPerformAction(@NotNull ItemStack stack, @NotNull ItemAbility ability) {
-        return super.canPerformAction(stack, ability) || ability.equals(ItemAbilities.SPYGLASS_SCOPE);
+        if (FMLEnvironment.dist.isClient() && ClientData.SCOPE_ENABLED && ability.equals(ItemAbilities.SPYGLASS_SCOPE)) {
+            return true;
+        }
+        return super.canPerformAction(stack, ability);
     }
 
     @Override
@@ -52,7 +57,7 @@ public class BowOfTheGaladhrim extends BowItem implements CascadeItem {
     protected void shoot(@NotNull ServerLevel level, @NotNull LivingEntity shooter, @NotNull InteractionHand hand, @NotNull ItemStack weapon, @NotNull List<ItemStack> projectileItems, float velocity, float inaccuracy, boolean isCrit, @Nullable LivingEntity target) {
         if (shooter instanceof Player player && canUse(player)) {
             velocity *= ServerConfig.BOW_OF_THE_GALADHRIM_VELOCITY.get();
-            float accuracy = ServerConfig.BOW_OF_THE_GALADHRIM_ACCURACY.get();
+            float accuracy = ServerConfig.BOW_OF_THE_GALADHRIM_ACCURACY.get().floatValue();
             inaccuracy = (accuracy == 0 ? 0 : inaccuracy / accuracy);
         }
         super.shoot(level, shooter, hand, weapon, projectileItems, velocity, inaccuracy, isCrit, target);
@@ -62,6 +67,8 @@ public class BowOfTheGaladhrim extends BowItem implements CascadeItem {
     public @NotNull AbstractArrow customArrow(AbstractArrow arrow, @NotNull ItemStack projectileStack, @NotNull ItemStack weaponStack) {
         if (arrow.getOwner() instanceof Player player && canUse(player)) {
             arrow.setNoGravity(true);
+            arrow.addTag("NoResistance");
+            arrow.addTag("Expires");
             if (weaponStack.getOrDefault(CascadeDataComponents.SUPERCHARGED, false)) {
                 weaponStack.remove(CascadeDataComponents.SUPERCHARGED);
                 arrow.setBaseDamage(arrow.getBaseDamage() * ServerConfig.BOW_OF_THE_GALADHRIM_MULT.get());
