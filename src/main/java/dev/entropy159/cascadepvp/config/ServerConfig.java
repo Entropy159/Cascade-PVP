@@ -31,6 +31,8 @@ public class ServerConfig {
     public static final ModConfigSpec.DoubleValue BOOMBOW_EXPLOSION_RADIUS = BUILDER.comment("The explosion radius of shot arrows. TNT is 4, crystal is 6").defineInRange("boombow.explosionRadius", 2D, 0, 15);
     public static final ModConfigSpec.IntValue BOOMBOW_DELAY_TICKS = BUILDER.comment("The delay in ticks before an arrow explodes on impact").defineInRange("boombow.delay", 20, 0, 20000);
 
+    public static final ModConfigSpec.IntValue RIFTWAND_SPAWN_DELAY = BUILDER.comment("The delay in ticks between using a Riftwand and a Reality Tear spawning").defineInRange("riftwand.delay", 5 * 20, 0, 20000);
+
     public static ModConfigSpec getSpec() {
         for (var aspect : HexbladeItem.ASPECTS) {
             aspect.registerConfigs(BUILDER);

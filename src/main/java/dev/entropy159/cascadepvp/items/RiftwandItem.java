@@ -23,7 +23,7 @@ public class RiftwandItem extends Item {
                 for (int slot = 0; slot < player.getInventory().getContainerSize(); slot++) {
                     if (player.getInventory().getItem(slot).is(Items.AMETHYST_SHARD) || player.getAbilities().instabuild) {
                         BlockPos pos = context.getClickedPos().offset(context.getClickedFace().getNormal());
-                        if (RealityTearEntity.create(level, pos, player) != null) {
+                        if (RealityTearEntity.startSpawn(level, pos, player)) {
                             if (!player.getAbilities().instabuild) {
                                 player.getInventory().getItem(slot).consume(1, player);
                             }

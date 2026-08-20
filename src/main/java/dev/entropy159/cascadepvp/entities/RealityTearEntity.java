@@ -1,9 +1,12 @@
 package dev.entropy159.cascadepvp.entities;
 
+import dev.entropy159.cascadepvp.config.ServerConfig;
 import dev.entropy159.cascadepvp.dimensions.QuantumDimension;
 import dev.entropy159.cascadepvp.items.RiftwandItem;
 import dev.entropy159.cascadepvp.registry.CascadeEntities;
+import dev.entropy159.entropylib.util.EventScheduler;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -19,10 +22,14 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class RealityTearEntity extends Entity {
+    private static final int DEFAULT_COLOR = 0x7300F0;
     private static final EntityDataAccessor<Integer> DATA_COLOR = SynchedEntityData.defineId(RealityTearEntity.class, EntityDataSerializers.INT);
 
     public RealityTearEntity(EntityType<?> entityType, Level level) {
@@ -43,9 +50,24 @@ public class RealityTearEntity extends Entity {
         return level.addFreshEntity(entity) ? entity : null;
     }
 
+    public static boolean startSpawn(ServerLevel level, BlockPos pos, @Nullable Player owner) {
+        if (!level.getEntities((Entity) null, new AABB(pos), e -> e instanceof RealityTearEntity).isEmpty()) {
+            return false;
+        }
+        int color = owner == null ? DEFAULT_COLOR : owner.getTeamColor();
+        int delay = ServerConfig.RIFTWAND_SPAWN_DELAY.get();
+        Vec3 center = pos.getCenter();
+        AtomicInteger timer = new AtomicInteger();
+        EventScheduler.scheduleUntil(1, () -> timer.getAndIncrement() >= delay, () -> level.sendParticles(new DustParticleOptions(Vec3.fromRGB24(color).toVector3f(), 1), center.x, center.y, center.z, 1, 0, 0, 0, 0));
+        EventScheduler.schedule(1, () -> timer.get() >= delay, () -> {
+            create(level, pos, owner);
+        });
+        return true;
+    }
+
     @Override
     protected void defineSynchedData(SynchedEntityData.@NotNull Builder builder) {
-        builder.define(DATA_COLOR, 0x7300F0);
+        builder.define(DATA_COLOR, DEFAULT_COLOR);
     }
 
     @Override
