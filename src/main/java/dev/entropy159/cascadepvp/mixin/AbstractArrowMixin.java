@@ -1,6 +1,8 @@
 package dev.entropy159.cascadepvp.mixin;
 
 import dev.entropy159.cascadepvp.config.ServerConfig;
+import dev.entropy159.entropylib.util.EventScheduler;
+import net.minecraft.core.Position;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -22,9 +24,6 @@ public abstract class AbstractArrowMixin extends Projectile {
     @Shadow
     protected int inGroundTime;
 
-    @Shadow
-    protected boolean inGround;
-
     protected AbstractArrowMixin(EntityType<? extends Projectile> entityType, Level level) {
         super(entityType, level);
     }
@@ -38,13 +37,23 @@ public abstract class AbstractArrowMixin extends Projectile {
 
     @Inject(method = "onHitEntity", at = @At("TAIL"))
     private void explodeEntity(EntityHitResult result, CallbackInfo ci) {
-        cascadePVP$explode();
+        int delay = ServerConfig.BOOMBOW_DELAY_TICKS.get();
+        if (delay < 1) {
+            cascadePVP$explode();
+        } else {
+            EventScheduler.schedule(delay, () -> cascadePVP$explode(result.getEntity().position()));
+        }
     }
 
     @Unique
     private void cascadePVP$explode() {
+        cascadePVP$explode(position());
+    }
+
+    @Unique
+    private void cascadePVP$explode(Position pos) {
         if (level() instanceof ServerLevel level && getTags().contains("Explosive")) {
-            level.explode(this, position().x, position().y, position().z, ServerConfig.BOOMBOW_EXPLOSION_RADIUS.get().floatValue(), false, Level.ExplosionInteraction.NONE);
+            level.explode(this, pos.x(), pos.y(), pos.z(), ServerConfig.BOOMBOW_EXPLOSION_RADIUS.get().floatValue(), false, Level.ExplosionInteraction.NONE);
             removeTag("Explosive");
         }
     }
