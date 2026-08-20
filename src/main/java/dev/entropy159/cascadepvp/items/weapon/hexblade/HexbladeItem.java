@@ -54,7 +54,7 @@ public class HexbladeItem extends CascadeSword {
                 if (!aspects.contains(aspect) && other.is(aspect.getItem().asItem())) {
                     if (unlockAspect(stack, i)) {
                         player.level().playSound(null, player.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS);
-                        other.shrink(1);
+                        other.consume(1, player);
                         return new InteractionResultHolder<>(InteractionResult.CONSUME, stack);
                     }
                 }

@@ -3,7 +3,6 @@ package dev.entropy159.cascadepvp.items;
 import dev.entropy159.cascadepvp.entities.RealityTearEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -26,7 +25,7 @@ public class RiftwandItem extends Item {
                         BlockPos pos = context.getClickedPos().offset(context.getClickedFace().getNormal());
                         if (RealityTearEntity.create(level, pos, player) != null) {
                             if (!player.getAbilities().instabuild) {
-                                player.getInventory().getItem(slot).shrink(1);
+                                player.getInventory().getItem(slot).consume(1, player);
                             }
                             player.getCooldowns().addCooldown(context.getItemInHand().getItem(), 60 * 20);
                             return InteractionResult.SUCCESS_NO_ITEM_USED;
