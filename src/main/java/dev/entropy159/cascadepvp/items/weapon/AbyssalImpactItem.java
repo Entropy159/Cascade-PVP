@@ -18,6 +18,7 @@ import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -126,5 +127,13 @@ public class AbyssalImpactItem extends AxeItem implements CascadeItem {
     @Override
     public boolean supportsEnchantment(@NotNull ItemStack stack, @NotNull Holder<Enchantment> enchantment) {
         return super.supportsEnchantment(stack, enchantment) || enchantment.is(Enchantments.WIND_BURST);
+    }
+
+    @Override
+    public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
+        super.inventoryTick(stack, level, entity, slotId, isSelected);
+        if (entity instanceof LivingEntity living) {
+            living.setGlowingTag(living.getMainHandItem().equals(stack));
+        }
     }
 }

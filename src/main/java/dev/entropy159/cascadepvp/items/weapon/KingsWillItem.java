@@ -12,7 +12,7 @@ import java.util.UUID;
 
 public class KingsWillItem extends CascadeSword {
     public KingsWillItem(Properties props) {
-        super(props, 3, -2F);
+        super(props, 5, -2.4F);
     }
 
     @Override
