@@ -60,8 +60,5 @@ public class BoombowItem extends BowItem implements CascadeItem {
             enchants.set(level.registryAccess().holderOrThrow(Enchantments.KNOCKBACK), 3);
             stack.set(DataComponents.ENCHANTMENTS, enchants.toImmutable());
         }
-        if (entity instanceof LivingEntity living) {
-            living.setGlowingTag(living.getMainHandItem().equals(stack));
-        }
     }
 }

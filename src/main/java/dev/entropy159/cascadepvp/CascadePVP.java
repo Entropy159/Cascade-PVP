@@ -124,6 +124,7 @@ public class CascadePVP {
         REGISTRATE.addRawLang("itemGroup." + MODID, "Cascade PVP");
 
         REGISTRATE.addRawLang("key.cascadepvp.ability", "Cascade Ability");
+        REGISTRATE.addRawLang("key.cascadepvp.utility", "Cascade Utility");
 
         REGISTRATE.configLang("reaperScythe", "Reaper Scythe");
         REGISTRATE.configLang(ServerConfig.REAPER_SCYTHE_LIFESTEAL, "Lifesteal Amount");
@@ -138,5 +139,6 @@ public class CascadePVP {
         REGISTRATE.configLang("kingsWill", "King's Will");
         REGISTRATE.configLang(ServerConfig.KINGS_WILL_COOLDOWN, "Cooldown");
         REGISTRATE.configLang("hexblade", "Hexblade");
+        REGISTRATE.configLang("abyssalImpact", "Abyssal Impact");
     }
 }

@@ -12,7 +12,8 @@ import org.spongepowered.asm.mixin.injection.At;
 public class EntityMixinClient {
     @ModifyReturnValue(method = "isInvisible", at = @At("RETURN"))
     private boolean invis(boolean original) {
-        if ((Object) this instanceof Player && Minecraft.getInstance().player != null && Minecraft.getInstance().player.hasEffect(CascadePotions.INVERSE_INVISIBILITY)) {
+        var player = Minecraft.getInstance().player;
+        if ((Object) this instanceof Player self && player != null && player.hasEffect(CascadePotions.INVERSE_INVISIBILITY) && player != self) {
             return true;
         }
         return original;

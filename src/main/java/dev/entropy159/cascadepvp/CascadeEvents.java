@@ -19,6 +19,7 @@ import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 @EventBusSubscriber(modid = CascadePVP.MODID)
@@ -27,13 +28,22 @@ public class CascadeEvents {
     public static void postDamage(LivingDamageEvent.Post event) {
         ItemStack weapon = event.getSource().getWeaponItem();
         LivingEntity target = event.getEntity();
-        if (weapon != null && event.getSource().getEntity() instanceof ServerPlayer player && weapon.getItem() instanceof CascadeItem item) {
-            if (item.canUse(player)) {
-                item.onHitEntity(player, target, event.getNewDamage(), event.getSource());
-            }
+        if (event.getSource().getEntity() instanceof ServerPlayer player) {
             if (player.hasEffect(CascadePotions.TRUE_INVISIBILITY) && target instanceof Player) {
                 player.removeEffect(CascadePotions.TRUE_INVISIBILITY);
             }
+            if (weapon != null && weapon.getItem() instanceof CascadeItem item) {
+                if (item.canUse(player)) {
+                    item.onHitEntity(player, target, event.getNewDamage(), event.getSource());
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void entityTick(EntityTickEvent.Post event) {
+        if (event.getEntity() instanceof LivingEntity entity) {
+            entity.setGlowingTag(entity.getMainHandItem().getItem() instanceof CascadeItem);
         }
     }
 

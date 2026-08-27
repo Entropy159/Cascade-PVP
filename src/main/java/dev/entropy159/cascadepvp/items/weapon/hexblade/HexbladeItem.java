@@ -3,22 +3,16 @@ package dev.entropy159.cascadepvp.items.weapon.hexblade;
 import dev.entropy159.cascadepvp.items.weapon.CascadeSword;
 import dev.entropy159.cascadepvp.items.weapon.hexblade.aspects.*;
 import dev.entropy159.cascadepvp.registry.CascadeDataComponents;
-import dev.entropy159.cascadepvp.registry.CascadeItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -41,26 +35,6 @@ public class HexbladeItem extends CascadeSword {
     @Override
     public String description() {
         return "Forged with a mix of the elements and a hint of entropic magic, the blade is powerful yet unstable.";
-    }
-
-    @Override
-    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand usedHand) {
-        if (!player.getOffhandItem().isEmpty() && player.getMainHandItem().is(CascadeItems.HEXBLADE)) {
-            ItemStack stack = player.getMainHandItem();
-            ItemStack other = player.getOffhandItem();
-            var aspects = getAspects(stack);
-            for (int i = 0; i < ASPECTS.size(); i++) {
-                var aspect = ASPECTS.get(i);
-                if (!aspects.contains(aspect) && other.is(aspect.getItem().asItem())) {
-                    if (unlockAspect(stack, i)) {
-                        player.level().playSound(null, player.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS);
-                        other.consume(1, player);
-                        return new InteractionResultHolder<>(InteractionResult.CONSUME, stack);
-                    }
-                }
-            }
-        }
-        return super.use(level, player, usedHand);
     }
 
     @Override
@@ -147,5 +121,25 @@ public class HexbladeItem extends CascadeSword {
         }
         tooltip.add(Component.literal("Unlocked " + getAspects(stack).size() + "/" + ASPECTS.size()).withStyle(ChatFormatting.DARK_AQUA));
         super.modifyTooltip(tooltip, stack, player, context, flag);
+    }
+
+    @Override
+    public void utilityServer(ServerPlayer player, ItemStack stack) {
+        super.utilityServer(player, stack);
+        ItemStack other = player.getOffhandItem();
+        if (other.isEmpty()) {
+            return;
+        }
+        var aspects = getAspects(stack);
+        for (int i = 0; i < ASPECTS.size(); i++) {
+            var aspect = ASPECTS.get(i);
+            if (!aspects.contains(aspect) && other.is(aspect.getItem().asItem())) {
+                if (unlockAspect(stack, i)) {
+                    player.level().playSound(null, player.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS);
+                    other.consume(1, player);
+                    return;
+                }
+            }
+        }
     }
 }

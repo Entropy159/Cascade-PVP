@@ -18,7 +18,6 @@ import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -37,8 +36,11 @@ public class AbyssalImpactItem extends AxeItem implements CascadeItem {
         if (player instanceof ServerPlayer) {
             double power = ServerConfig.ABYSSAL_IMPACT_VELOCITY.get();
             var look = player.getLookAngle().normalize();
-            var flatLook = new Vec3(look.x, 0, look.z).normalize().scale(power);
-            var velocity = new Vec3(flatLook.x, power, flatLook.z);
+            double angle = ServerConfig.ABYSSAL_IMPACT_ANGLE.get();
+            double forward = Math.cos(Math.toRadians(angle));
+            double up = Math.sin(Math.toRadians(angle));
+            var flatLook = new Vec3(look.x, 0, look.z).normalize().scale(forward * power);
+            var velocity = new Vec3(flatLook.x, up * power, flatLook.z);
             player.push(velocity);
             player.connection.send(new ClientboundSetEntityMotionPacket(player));
             return ServerConfig.ABYSSAL_IMPACT_COOLDOWN.get();
@@ -127,13 +129,5 @@ public class AbyssalImpactItem extends AxeItem implements CascadeItem {
     @Override
     public boolean supportsEnchantment(@NotNull ItemStack stack, @NotNull Holder<Enchantment> enchantment) {
         return super.supportsEnchantment(stack, enchantment) || enchantment.is(Enchantments.WIND_BURST);
-    }
-
-    @Override
-    public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
-        super.inventoryTick(stack, level, entity, slotId, isSelected);
-        if (entity instanceof LivingEntity living) {
-            living.setGlowingTag(living.getMainHandItem().equals(stack));
-        }
     }
 }

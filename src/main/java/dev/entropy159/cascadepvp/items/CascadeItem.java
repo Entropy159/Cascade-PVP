@@ -1,5 +1,6 @@
 package dev.entropy159.cascadepvp.items;
 
+import dev.entropy159.cascadepvp.network.toServer.UtilityPacket;
 import dev.entropy159.cascadepvp.registry.CascadeGameRules;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -8,6 +9,8 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
+import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -53,5 +56,15 @@ public interface CascadeItem {
     }
 
     default void onHitEntity(ServerPlayer player, LivingEntity target, float damage, DamageSource source) {
+    }
+
+    default void utilityClient(Player player, ItemStack stack) {
+        if (FMLEnvironment.dist.isClient()) {
+            PacketDistributor.sendToServer(new UtilityPacket());
+        }
+    }
+
+    default void utilityServer(ServerPlayer player, ItemStack stack) {
+
     }
 }

@@ -14,12 +14,14 @@ public class ServerConfig {
     public static final ModConfigSpec.BooleanValue SHADOW_KARAMBIT_INVIS_PARTICLES = BUILDER.comment("Whether the invisibility has particles").define("shadowKarambit.invisParticles", true);
     public static final ModConfigSpec.IntValue SHADOW_KARAMBIT_INVIS_COOLDOWN = BUILDER.comment("The cooldown in ticks of the active ability").defineInRange("shadowKarambit.invisCooldown", 600, 0, 20000);
     public static final ModConfigSpec.DoubleValue SHADOW_KARAMBIT_WITHER_CHANCE = BUILDER.comment("The chance to inflict wither on hit entities (0-1), is multiplied by the damage").defineInRange("shadowKarambit.witherChance", 0.05, 0, 1);
-    public static final ModConfigSpec.IntValue SHADOW_KARAMBIT_WITHER_DURATION = BUILDER.comment("The duration of the wither effect in ticks, is multiplied by the damage").defineInRange("shadowKarambit.witherDuration", 60, 0, 20000);
+    public static final ModConfigSpec.IntValue SHADOW_KARAMBIT_WITHER_DURATION = BUILDER.comment("The duration of the wither effect in ticks, is multiplied by the damage").defineInRange("shadowKarambit.witherDuration", 30, 0, 20000);
+    public static final ModConfigSpec.IntValue SHADOW_KARAMBIT_WITHER_LEVEL = BUILDER.comment("The level of wither to apply on hit").defineInRange("shadowKarambit.witherLevel", 2, 0, 255);
 
     public static final ModConfigSpec.IntValue KINGS_WILL_COOLDOWN = BUILDER.comment("The cooldown in ticks of the active ability").defineInRange("kingsWill.cooldown", 60 * 20, 0, 20000);
 
     public static final ModConfigSpec.IntValue ABYSSAL_IMPACT_COOLDOWN = BUILDER.comment("The cooldown in ticks of the active ability").defineInRange("abyssalImpact.cooldown", 45 * 20, 0, 20000);
     public static final ModConfigSpec.DoubleValue ABYSSAL_IMPACT_VELOCITY = BUILDER.comment("The velocity of the active ability").defineInRange("abyssalImpact.velocity", 2, 0D, 15);
+    public static final ModConfigSpec.DoubleValue ABYSSAL_IMPACT_ANGLE = BUILDER.comment("The angle in degrees of the launch direction. 0 is straight forward, 90 is straight up").defineInRange("abyssalImpact.angle", 50d, 0, 90);
 
     public static final ModConfigSpec.DoubleValue BOW_OF_THE_GALADHRIM_VELOCITY = BUILDER.comment("The velocity multiplier of arrows shot").defineInRange("bowOfTheGaladhrim.velocity", 2D, 0, 10);
     public static final ModConfigSpec.DoubleValue BOW_OF_THE_GALADHRIM_ACCURACY = BUILDER.comment("The inaccuracy of the bow is divided by this amount. Set to zero for perfect accuracy").defineInRange("bowOfTheGaladhrim.accuracy", 2D, 0, 10);

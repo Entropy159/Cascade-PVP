@@ -5,7 +5,6 @@ import dev.entropy159.cascadepvp.items.weapon.hexblade.aspects.VoidFormAspect;
 import dev.entropy159.cascadepvp.registry.CascadePotions;
 import dev.entropy159.entropylib.util.InvisEffect;
 import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -58,10 +57,5 @@ public class VoidFormEffect extends MobEffect implements InvisEffect {
     @Override
     public boolean isFull() {
         return true;
-    }
-
-    @Override
-    public ResourceLocation id() {
-        return CascadePVP.id("void_form");
     }
 }

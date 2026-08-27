@@ -1,9 +1,7 @@
 package dev.entropy159.cascadepvp.effects;
 
-import dev.entropy159.cascadepvp.CascadePVP;
 import dev.entropy159.cascadepvp.config.ServerConfig;
 import dev.entropy159.entropylib.util.InvisEffect;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -18,11 +16,6 @@ public class TrueInvisibilityEffect extends MobEffect implements InvisEffect {
     @Override
     public boolean isFull() {
         return true;
-    }
-
-    @Override
-    public ResourceLocation id() {
-        return CascadePVP.id("true_invis");
     }
 
     @Override

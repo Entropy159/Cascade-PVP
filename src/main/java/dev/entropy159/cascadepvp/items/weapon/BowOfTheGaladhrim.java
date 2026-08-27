@@ -1,22 +1,20 @@
 package dev.entropy159.cascadepvp.items.weapon;
 
-import dev.entropy159.cascadepvp.client.ClientData;
 import dev.entropy159.cascadepvp.config.ServerConfig;
 import dev.entropy159.cascadepvp.items.CascadeItem;
 import dev.entropy159.cascadepvp.registry.CascadeDataComponents;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
-import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.common.ItemAbility;
 import org.jetbrains.annotations.NotNull;
@@ -26,13 +24,15 @@ import java.util.List;
 import java.util.UUID;
 
 public class BowOfTheGaladhrim extends BowItem implements CascadeItem {
+    public static boolean SCOPE_ENABLED = true;
+
     public BowOfTheGaladhrim(Properties props) {
         super(CascadeItem.defaultProps(props).durability(768));
     }
 
     @Override
     public boolean canPerformAction(@NotNull ItemStack stack, @NotNull ItemAbility ability) {
-        if (FMLEnvironment.dist.isClient() && ClientData.SCOPE_ENABLED && ability.equals(ItemAbilities.SPYGLASS_SCOPE)) {
+        if (SCOPE_ENABLED && ability.equals(ItemAbilities.SPYGLASS_SCOPE)) {
             return true;
         }
         return super.canPerformAction(stack, ability);
@@ -81,10 +81,8 @@ public class BowOfTheGaladhrim extends BowItem implements CascadeItem {
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
-        super.inventoryTick(stack, level, entity, slotId, isSelected);
-        if (entity instanceof LivingEntity living) {
-            living.setGlowingTag(living.getMainHandItem().equals(stack));
-        }
+    public void utilityClient(Player player, ItemStack stack) {
+        SCOPE_ENABLED = !SCOPE_ENABLED;
+        player.sendSystemMessage(Component.literal(SCOPE_ENABLED ? "Enabled scope" : "Disabled scope").withStyle(ChatFormatting.YELLOW));
     }
 }

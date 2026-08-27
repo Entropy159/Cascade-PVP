@@ -7,12 +7,10 @@ import dev.entropy159.cascadepvp.items.CascadeItem;
 import dev.entropy159.cascadepvp.network.toServer.AbilityPacket;
 import dev.entropy159.cascadepvp.registry.CascadeItems;
 import dev.entropy159.cascadepvp.registry.CascadePotions;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
 import net.minecraft.client.renderer.item.ItemProperties;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.neoforged.api.distmarker.Dist;
@@ -47,7 +45,7 @@ public class CascadePVPClient {
     private static final ClampedItemPropertyFunction BOW_PULLING = (stack, level, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1 : 0;
 
     public static final Lazy<KeyMapping> ABILITY = Lazy.of(() -> new KeyMapping("key.cascadepvp.ability", KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_R, "key.categories.gameplay"));
-    public static final Lazy<KeyMapping> TOGGLE_SCOPE = Lazy.of(() -> new KeyMapping("key.cascadepvp.toggle_scope", KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_Z, "key.categories.gameplay"));
+    public static final Lazy<KeyMapping> UTILITY = Lazy.of(() -> new KeyMapping("key.cascadepvp.utility", KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_Z, "key.categories.gameplay"));
 
     public CascadePVPClient(ModContainer container) {
         container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
@@ -64,7 +62,7 @@ public class CascadePVPClient {
     @SubscribeEvent
     public static void keybinds(RegisterKeyMappingsEvent event) {
         event.register(ABILITY.get());
-        event.register(TOGGLE_SCOPE.get());
+        event.register(UTILITY.get());
     }
 
     @SubscribeEvent
@@ -76,18 +74,18 @@ public class CascadePVPClient {
                 PacketDistributor.sendToServer(new AbilityPacket(entity == null ? -1 : entity.getId()));
             }
         }
-        while (TOGGLE_SCOPE.get().consumeClick()) {
+        while (UTILITY.get().consumeClick()) {
             var player = Minecraft.getInstance().player;
-            if (player != null) {
-                ClientData.SCOPE_ENABLED = !ClientData.SCOPE_ENABLED;
-                player.sendSystemMessage(Component.literal(ClientData.SCOPE_ENABLED ? "Enabled scope" : "Disabled scope").withStyle(ChatFormatting.YELLOW));
+            if (player != null && player.getMainHandItem().getItem() instanceof CascadeItem item) {
+                item.utilityClient(player, player.getMainHandItem());
             }
         }
     }
 
     @SubscribeEvent
     public static void onRenderPlayer(RenderPlayerEvent.Pre event) {
-        if (Minecraft.getInstance().player != null && Minecraft.getInstance().player.hasEffect(CascadePotions.INVERSE_INVISIBILITY)) {
+        var player = Minecraft.getInstance().player;
+        if (player != null && player.hasEffect(CascadePotions.INVERSE_INVISIBILITY) && event.getEntity() != player) {
             event.setCanceled(true);
         }
     }

@@ -40,7 +40,18 @@ public class ShadowKarambitItem extends CascadeSword {
         double chance = ServerConfig.SHADOW_KARAMBIT_WITHER_CHANCE.get() * damage;
         int duration = (int) (ServerConfig.SHADOW_KARAMBIT_WITHER_DURATION.get() * damage);
         if (new Random().nextDouble() < chance) {
-            target.addEffect(new MobEffectInstance(MobEffects.WITHER, duration));
+            int amplifier = ServerConfig.SHADOW_KARAMBIT_WITHER_LEVEL.get() - 1;
+            if (amplifier >= 0) {
+                target.addEffect(new MobEffectInstance(MobEffects.WITHER, duration, amplifier));
+            }
+        }
+    }
+
+    @Override
+    public void utilityServer(ServerPlayer player, ItemStack stack) {
+        super.utilityServer(player, stack);
+        if (player.hasEffect(CascadePotions.TRUE_INVISIBILITY)) {
+            player.removeEffect(CascadePotions.TRUE_INVISIBILITY);
         }
     }
 }
