@@ -1,5 +1,6 @@
 package dev.entropy159.cascadepvp;
 
+import dev.entropy159.cascadepvp.config.ServerConfig;
 import dev.entropy159.cascadepvp.dimensions.QuantumDimension;
 import dev.entropy159.cascadepvp.items.CascadeItem;
 import dev.entropy159.cascadepvp.items.weapon.ReaperScytheItem;
@@ -10,6 +11,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -21,6 +23,8 @@ import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
+
+import java.util.Optional;
 
 @EventBusSubscriber(modid = CascadePVP.MODID)
 public class CascadeEvents {
@@ -44,6 +48,9 @@ public class CascadeEvents {
     public static void entityTick(EntityTickEvent.Post event) {
         if (event.getEntity() instanceof LivingEntity entity) {
             entity.setGlowingTag(entity.getMainHandItem().getItem() instanceof CascadeItem);
+        }
+        if (event.getEntity() instanceof ServerPlayer player) {
+            Optional.ofNullable(player.getAttribute(Attributes.MAX_HEALTH)).ifPresent(attr -> attr.setBaseValue(ServerConfig.MAX_HEALTH.get()));
         }
     }
 

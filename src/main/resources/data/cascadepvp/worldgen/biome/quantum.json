@@ -32,5 +32,17 @@
   "spawners": {},
   "spawn_costs": {},
   "carvers": {},
-  "features": []
+  "features": [
+    [
+      "cascadepvp:coal",
+      "cascadepvp:copper",
+      "cascadepvp:iron",
+      "cascadepvp:gold",
+      "cascadepvp:redstone",
+      "cascadepvp:lapis",
+      "cascadepvp:quartz",
+      "cascadepvp:emerald",
+      "cascadepvp:diamond"
+    ]
+  ]
 }
