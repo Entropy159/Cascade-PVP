@@ -69,7 +69,7 @@ public class CascadeEvents {
         if (event.getEntity() instanceof ServerPlayer player) {
             if (player.level().dimension().equals(QuantumDimension.QUANTUM) && player.serverLevel().getGameRules().getBoolean(CascadeGameRules.QUANTUM_DEATH_PROTECTION)) {
                 event.setCanceled(true);
-                QuantumDimension.teleportFrom(player);
+                QuantumDimension.teleportFrom(player, player.blockPosition().atY(player.level().getMaxBuildHeight() + 1));
                 player.setHealth(4);
             }
         }
