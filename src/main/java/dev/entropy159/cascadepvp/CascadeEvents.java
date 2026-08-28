@@ -12,10 +12,12 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.monster.EnderMan;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.EntityMobGriefingEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
@@ -84,6 +86,13 @@ public class CascadeEvents {
     public static void tooltips(ItemTooltipEvent event) {
         if (event.getItemStack().getItem() instanceof CascadeItem item) {
             item.modifyTooltip(event.getToolTip(), event.getItemStack(), event.getEntity(), event.getContext(), event.getFlags());
+        }
+    }
+
+    @SubscribeEvent
+    public static void grief(EntityMobGriefingEvent event) {
+        if (event.getEntity() instanceof EnderMan && ServerConfig.LESS_MOB_GRIEFING.get()) {
+            event.setCanGrief(false);
         }
     }
 }

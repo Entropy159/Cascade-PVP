@@ -4,7 +4,9 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "AbstractArrowMixin",
+    "CreeperMixin",
     "EnderEyeItemMixin",
+    "LargeFireballMixin",
     "ServerPlayerGameModeMixin"
   ],
   "injectors": {
