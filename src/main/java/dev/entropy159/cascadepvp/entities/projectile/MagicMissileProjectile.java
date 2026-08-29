@@ -1,5 +1,6 @@
 package dev.entropy159.cascadepvp.entities.projectile;
 
+import dev.entropy159.cascadepvp.config.ServerConfig;
 import dev.entropy159.cascadepvp.items.weapon.hexblade.aspects.MagicMissileAspect;
 import dev.entropy159.cascadepvp.registry.CascadeEntities;
 import net.minecraft.core.particles.DustParticleOptions;
@@ -13,6 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.event.EventHooks;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -95,7 +97,7 @@ public class MagicMissileProjectile extends AbstractArrow {
     }
 
     public void explode() {
-        level().explode(this, getX(), getY(), getZ(), MagicMissileAspect.POWER.get(), Level.ExplosionInteraction.MOB);
+        level().explode(this, getX(), getY(), getZ(), MagicMissileAspect.POWER.get(), (EventHooks.canEntityGrief(level(), this) && !ServerConfig.LESS_MOB_GRIEFING.get()) ? Level.ExplosionInteraction.MOB : Level.ExplosionInteraction.NONE);
         discard();
     }
 
