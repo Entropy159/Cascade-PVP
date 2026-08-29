@@ -129,6 +129,6 @@ public class AbyssalImpactItem extends AxeItem implements CascadeItem {
 
     @Override
     public boolean supportsEnchantment(@NotNull ItemStack stack, @NotNull Holder<Enchantment> enchantment) {
-        return super.supportsEnchantment(stack, enchantment) || enchantment.is(Enchantments.WIND_BURST);
+        return super.supportsEnchantment(stack, enchantment) || enchantment.is(Enchantments.WIND_BURST) || enchantment.is(Enchantments.FIRE_ASPECT);
     }
 }
