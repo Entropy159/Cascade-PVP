@@ -31,6 +31,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class RealityTearEntity extends Entity {
     private static final int DEFAULT_COLOR = 0x7300F0;
     private static final EntityDataAccessor<Integer> DATA_COLOR = SynchedEntityData.defineId(RealityTearEntity.class, EntityDataSerializers.INT);
+    private int removeTimer = -1;
 
     public RealityTearEntity(EntityType<?> entityType, Level level) {
         super(entityType, level);
@@ -75,11 +76,15 @@ public class RealityTearEntity extends Entity {
         if (tag.contains("Color")) {
             setColor(tag.getInt("Color"));
         }
+        if (tag.contains("RemoveTimer")) {
+            removeTimer = tag.getInt("RemoveTimer");
+        }
     }
 
     @Override
     protected void addAdditionalSaveData(@NotNull CompoundTag tag) {
         tag.putInt("Color", getColor());
+        tag.putInt("RemoveTimer", removeTimer);
     }
 
     public int getColor() {
@@ -99,8 +104,7 @@ public class RealityTearEntity extends Entity {
     public @NotNull InteractionResult interact(@NotNull Player p, @NotNull InteractionHand hand) {
         if (p instanceof ServerPlayer player) {
             if (player.getItemInHand(hand).getItem() instanceof RiftwandItem && player.isCrouching()) {
-                level().playSound(null, blockPosition(), SoundEvents.BEACON_DEACTIVATE, SoundSource.PLAYERS);
-                discard();
+                removeTimer = ServerConfig.REALITY_TEAR_REMOVE_DELAY.get();
                 return InteractionResult.SUCCESS;
             }
             if (level().dimension().equals(QuantumDimension.QUANTUM)) {
@@ -115,5 +119,23 @@ public class RealityTearEntity extends Entity {
             }
         }
         return super.interact(p, hand);
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (level().isClientSide()) {
+            if (removeTimer > 0) {
+                removeTimer--;
+                if (level() instanceof ServerLevel level) {
+                    int color = getColor();
+                    Vec3 center = blockPosition().getCenter();
+                    level.sendParticles(new DustParticleOptions(Vec3.fromRGB24(color).toVector3f(), 1), center.x, center.y, center.z, 1, 0, 0, 0, 0);
+                }
+            } else if (removeTimer == 0) {
+                level().playSound(null, blockPosition(), SoundEvents.BEACON_DEACTIVATE, SoundSource.PLAYERS);
+                discard();
+            }
+        }
     }
 }
