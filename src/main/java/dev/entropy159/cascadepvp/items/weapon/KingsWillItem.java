@@ -17,10 +17,10 @@ public class KingsWillItem extends CascadeSword {
 
     @Override
     public int activeAbility(ServerPlayer player, ItemStack stack, LivingEntity target) {
-        player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 200, 1));
+        player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 300, 1));
         player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 200));
         player.addEffect(new MobEffectInstance(MobEffects.SATURATION, 20));
-        player.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 1200));
+        player.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 1200, 1));
         return ServerConfig.KINGS_WILL_COOLDOWN.get();
     }
 

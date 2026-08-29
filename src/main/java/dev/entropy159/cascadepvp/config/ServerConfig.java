@@ -17,7 +17,7 @@ public class ServerConfig {
     public static final ModConfigSpec.IntValue SHADOW_KARAMBIT_WITHER_DURATION = BUILDER.comment("The duration of the wither effect in ticks, is multiplied by the damage").defineInRange("shadowKarambit.witherDuration", 30, 0, 20000);
     public static final ModConfigSpec.IntValue SHADOW_KARAMBIT_WITHER_LEVEL = BUILDER.comment("The level of wither to apply on hit").defineInRange("shadowKarambit.witherLevel", 2, 0, 255);
 
-    public static final ModConfigSpec.IntValue KINGS_WILL_COOLDOWN = BUILDER.comment("The cooldown in ticks of the active ability").defineInRange("kingsWill.cooldown", 60 * 20, 0, 20000);
+    public static final ModConfigSpec.IntValue KINGS_WILL_COOLDOWN = BUILDER.comment("The cooldown in ticks of the active ability").defineInRange("kingsWill.cooldown", 40 * 20, 0, 20000);
 
     public static final ModConfigSpec.IntValue ABYSSAL_IMPACT_COOLDOWN = BUILDER.comment("The cooldown in ticks of the active ability").defineInRange("abyssalImpact.cooldown", 45 * 20, 0, 20000);
     public static final ModConfigSpec.DoubleValue ABYSSAL_IMPACT_VELOCITY = BUILDER.comment("The velocity of the active ability").defineInRange("abyssalImpact.velocity", 2, 0D, 15);
@@ -31,6 +31,7 @@ public class ServerConfig {
     public static final ModConfigSpec.IntValue BOW_OF_THE_GALADHRIM_ARROW_EXPIRATION = BUILDER.comment("The ticks it takes for an arrow shot by this bow to expire").defineInRange("bowOfTheGaladhrim.expiration", 5 * 60 * 20, 0, 20 * 60 * 20);
 
     public static final ModConfigSpec.DoubleValue BOOMBOW_EXPLOSION_RADIUS = BUILDER.comment("The explosion radius of shot arrows. TNT is 4, crystal is 6").defineInRange("boombow.explosionRadius", 2D, 0, 15);
+    public static final ModConfigSpec.IntValue BOOMBOW_EXPLOSION_DAMAGE = BUILDER.comment("The damage dealt by the explosion. Scales linearly out towards the radius").defineInRange("boomBow.explosionDamage", 10, 0, 200);
     public static final ModConfigSpec.IntValue BOOMBOW_DELAY_TICKS = BUILDER.comment("The delay in ticks before an arrow explodes on impact").defineInRange("boombow.delay", 20, 0, 20000);
 
     public static final ModConfigSpec.IntValue MAX_HEALTH = BUILDER.comment("Players' max health will be set to this value").defineInRange("maxHealth", 40, 1, 2000);
