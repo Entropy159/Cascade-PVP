@@ -37,8 +37,8 @@ public class ShadowKarambitItem extends CascadeSword {
     @Override
     public void onHitEntity(ServerPlayer player, LivingEntity target, float damage, DamageSource source) {
         super.onHitEntity(player, target, damage, source);
-        double chance = ServerConfig.SHADOW_KARAMBIT_WITHER_CHANCE.get() * damage;
-        int duration = (int) (ServerConfig.SHADOW_KARAMBIT_WITHER_DURATION.get() * damage);
+        double chance = ServerConfig.SHADOW_KARAMBIT_WITHER_CHANCE.get();
+        int duration = ServerConfig.SHADOW_KARAMBIT_WITHER_DURATION.get();
         if (new Random().nextDouble() < chance) {
             int amplifier = ServerConfig.SHADOW_KARAMBIT_WITHER_LEVEL.get() - 1;
             if (amplifier >= 0) {
