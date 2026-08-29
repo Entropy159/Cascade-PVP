@@ -12,6 +12,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.entity.monster.EnderMan;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -26,10 +27,13 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 
+import java.util.List;
 import java.util.Optional;
 
 @EventBusSubscriber(modid = CascadePVP.MODID)
 public class CascadeEvents {
+    private static final List<Class<? extends LivingEntity>> LESS_GRIEFING = List.of(EnderMan.class, WitherBoss.class);
+
     @SubscribeEvent
     public static void postDamage(LivingDamageEvent.Post event) {
         ItemStack weapon = event.getSource().getWeaponItem();
@@ -91,8 +95,13 @@ public class CascadeEvents {
 
     @SubscribeEvent
     public static void grief(EntityMobGriefingEvent event) {
-        if (event.getEntity() instanceof EnderMan && ServerConfig.LESS_MOB_GRIEFING.get()) {
-            event.setCanGrief(false);
+        if (ServerConfig.LESS_MOB_GRIEFING.get()) {
+            for (var mobClass : LESS_GRIEFING) {
+                if (mobClass.isAssignableFrom(event.getEntity().getClass())) {
+                    event.setCanGrief(false);
+                    return;
+                }
+            }
         }
     }
 }
