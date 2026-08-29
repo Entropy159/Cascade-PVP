@@ -62,7 +62,7 @@ public abstract class AbstractArrowMixin extends Projectile {
                 if (e instanceof LivingEntity entity) {
                     double distance = entity.distanceTo(this);
                     int maxDamage = ServerConfig.BOOMBOW_EXPLOSION_DAMAGE.get();
-                    float damage = (float) Mth.lerp(distance / maxDistance, 0, maxDamage);
+                    float damage = (float) Mth.lerp(distance / maxDistance, maxDamage, 0);
                     entity.hurt(damageSources().explosion(this, getOwner()), damage);
                 }
             }

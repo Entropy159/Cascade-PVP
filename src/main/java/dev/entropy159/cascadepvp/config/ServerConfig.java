@@ -31,7 +31,7 @@ public class ServerConfig {
     public static final ModConfigSpec.IntValue BOW_OF_THE_GALADHRIM_ARROW_EXPIRATION = BUILDER.comment("The ticks it takes for an arrow shot by this bow to expire").defineInRange("bowOfTheGaladhrim.expiration", 5 * 60 * 20, 0, 20 * 60 * 20);
 
     public static final ModConfigSpec.DoubleValue BOOMBOW_EXPLOSION_RADIUS = BUILDER.comment("The explosion radius of shot arrows. TNT is 4, crystal is 6").defineInRange("boombow.explosionRadius", 2D, 0, 15);
-    public static final ModConfigSpec.IntValue BOOMBOW_EXPLOSION_DAMAGE = BUILDER.comment("The damage dealt by the explosion. Scales linearly out towards the radius").defineInRange("boomBow.explosionDamage", 10, 0, 200);
+    public static final ModConfigSpec.IntValue BOOMBOW_EXPLOSION_DAMAGE = BUILDER.comment("The damage dealt by the explosion. Scales linearly out towards the radius").defineInRange("boombow.explosionDamage", 10, 0, 200);
     public static final ModConfigSpec.IntValue BOOMBOW_DELAY_TICKS = BUILDER.comment("The delay in ticks before an arrow explodes on impact").defineInRange("boombow.delay", 20, 0, 20000);
 
     public static final ModConfigSpec.IntValue MAX_HEALTH = BUILDER.comment("Players' max health will be set to this value").defineInRange("maxHealth", 40, 1, 2000);
