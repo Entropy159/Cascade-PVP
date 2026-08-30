@@ -2,6 +2,7 @@ package dev.entropy159.cascadepvp;
 
 import dev.entropy159.cascadepvp.config.ServerConfig;
 import dev.entropy159.cascadepvp.dimensions.QuantumDimension;
+import dev.entropy159.cascadepvp.entities.projectile.MagicMissileProjectile;
 import dev.entropy159.cascadepvp.items.CascadeItem;
 import dev.entropy159.cascadepvp.items.weapon.ReaperScytheItem;
 import dev.entropy159.cascadepvp.network.toClient.WorldSeedPacket;
@@ -10,11 +11,13 @@ import dev.entropy159.cascadepvp.registry.CascadePotions;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.entity.monster.EnderMan;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -32,7 +35,7 @@ import java.util.Optional;
 
 @EventBusSubscriber(modid = CascadePVP.MODID)
 public class CascadeEvents {
-    private static final List<Class<? extends LivingEntity>> LESS_GRIEFING = List.of(EnderMan.class, WitherBoss.class);
+    private static final List<Class<? extends Entity>> LESS_GRIEFING = List.of(EnderMan.class, WitherBoss.class, MagicMissileProjectile.class, AbstractArrow.class);
 
     @SubscribeEvent
     public static void postDamage(LivingDamageEvent.Post event) {

@@ -4,9 +4,7 @@ import dev.entropy159.cascadepvp.config.ServerConfig;
 import dev.entropy159.entropylib.util.EventScheduler;
 import net.minecraft.core.Position;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -56,17 +54,7 @@ public abstract class AbstractArrowMixin extends Projectile {
     @Unique
     private void cascadePVP$explode(Position pos) {
         if (level() instanceof ServerLevel level && getTags().contains("Explosive")) {
-            double maxDistance = ServerConfig.BOOMBOW_EXPLOSION_RADIUS.get();
-            var entities = level.getEntities(this, this.getBoundingBox().inflate(maxDistance), e -> e instanceof LivingEntity);
-            for (var e : entities) {
-                if (e instanceof LivingEntity entity) {
-                    double distance = entity.distanceTo(this);
-                    int maxDamage = ServerConfig.BOOMBOW_EXPLOSION_DAMAGE.get();
-                    float damage = (float) Mth.lerp(distance / maxDistance, maxDamage, 0);
-                    entity.hurt(damageSources().explosion(this, getOwner()), damage);
-                }
-            }
-            level.explode(this, pos.x(), pos.y(), pos.z(), 0, false, Level.ExplosionInteraction.NONE);
+            level.explode(this, pos.x(), pos.y(), pos.z(), ServerConfig.BOOMBOW_EXPLOSION_RADIUS.get().floatValue(), false, Level.ExplosionInteraction.MOB);
             removeTag("Explosive");
         }
     }
