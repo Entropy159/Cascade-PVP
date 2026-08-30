@@ -42,7 +42,7 @@ public abstract class AbstractArrowMixin extends Projectile {
         if (delay < 1) {
             cascadePVP$explode();
         } else {
-            EventScheduler.schedule(delay, () -> cascadePVP$explode(result.getEntity().position()));
+            EventScheduler.schedule(delay, () -> cascadePVP$explode(result.getEntity().position().add(0, result.getEntity().getBbHeight() / 2d, 0)));
         }
     }
 
