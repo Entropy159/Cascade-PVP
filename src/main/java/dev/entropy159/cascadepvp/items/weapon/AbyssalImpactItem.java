@@ -3,7 +3,6 @@ package dev.entropy159.cascadepvp.items.weapon;
 import dev.entropy159.cascadepvp.config.ServerConfig;
 import dev.entropy159.cascadepvp.items.CascadeItem;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Holder;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -15,9 +14,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tiers;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -125,10 +122,5 @@ public class AbyssalImpactItem extends AxeItem implements CascadeItem {
         } else {
             return super.getAttackDamageBonus(target, damage, damageSource);
         }
-    }
-
-    @Override
-    public boolean supportsEnchantment(@NotNull ItemStack stack, @NotNull Holder<Enchantment> enchantment) {
-        return super.supportsEnchantment(stack, enchantment) || enchantment.is(Enchantments.WIND_BURST) || enchantment.is(Enchantments.FIRE_ASPECT);
     }
 }

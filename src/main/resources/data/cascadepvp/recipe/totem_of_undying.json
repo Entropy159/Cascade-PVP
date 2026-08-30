@@ -7,13 +7,13 @@
   ],
   "key": {
     "G": {
-      "item": "minecraft:gold_ingot"
+      "item": "minecraft:gold_block"
     },
     "E": {
-      "item": "minecraft:emerald"
+      "item": "minecraft:emerald_block"
     },
     "D": {
-      "item": "minecraft:diamond"
+      "item": "minecraft:diamond_block"
     },
     "T": {
       "item": "minecraft:ghast_tear"

@@ -51,7 +51,7 @@ public class CascadeItems {
                 .transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND).rotation(0, 90, -25).scale(scale, scale, scale).translation(1.13f, 3.2f, 1.13f).end()
                 .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND).rotation(0, -90, 25).scale(scale, scale, scale).translation(1.13f, 3.2f, 1.13f).end()
                 .end();
-    }).recipe(upgrade(Items.DIAMOND_AXE, ABYSSAL_IMPACT_TEMPLATE)).tag(ItemTags.AXES).register();
+    }).recipe(upgrade(Items.DIAMOND_AXE, ABYSSAL_IMPACT_TEMPLATE)).tag(ItemTags.AXES, ItemTags.MACE_ENCHANTABLE).register();
     public static final ItemEntry<BoombowItem> BOOMBOW = REGISTRATE.item("boombow", BoombowItem::new).model(bow()).recipe(upgrade(Items.BOW, BOOMBOW_TEMPLATE)).lang("Sparky Sparky Boom Bow").tag(Tags.Items.TOOLS_BOW, ItemTags.BOW_ENCHANTABLE, ItemTags.DURABILITY_ENCHANTABLE).register();
     public static final ItemEntry<BowOfTheGaladhrim> BOW_OF_THE_GALADHRIM = REGISTRATE.item("bow_of_the_galadhrim", BowOfTheGaladhrim::new).model(bowOverlay()).color(() -> () -> (stack, index) -> (index == 1 && stack.getOrDefault(CascadeDataComponents.SUPERCHARGED, false)) ? 0xFFFF0000 : 0xFF757575).recipe(template(Items.SPYGLASS, Items.WIND_CHARGE)).recipe(upgrade(Items.BOW, BOW_OF_THE_GALADHRIM_TEMPLATE)).tag(Tags.Items.TOOLS_BOW, ItemTags.BOW_ENCHANTABLE, ItemTags.DURABILITY_ENCHANTABLE).register();
 
