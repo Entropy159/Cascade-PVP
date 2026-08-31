@@ -56,7 +56,7 @@ public class CascadeEvents {
     @SubscribeEvent
     public static void entityTick(EntityTickEvent.Post event) {
         if (event.getEntity() instanceof LivingEntity entity) {
-            entity.setGlowingTag(entity.getMainHandItem().getItem() instanceof CascadeItem);
+            entity.setGlowingTag(entity.getMainHandItem().getItem() instanceof CascadeItem || entity.getOffhandItem().getItem() instanceof CascadeItem);
         }
         if (event.getEntity() instanceof ServerPlayer player) {
             Optional.ofNullable(player.getAttribute(Attributes.MAX_HEALTH)).ifPresent(attr -> attr.setBaseValue(ServerConfig.MAX_HEALTH.get()));

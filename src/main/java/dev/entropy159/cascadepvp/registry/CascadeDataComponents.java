@@ -15,6 +15,7 @@ public class CascadeDataComponents {
     public static final DeferredRegister.DataComponents REGISTRY = DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, CascadePVP.MODID);
 
     public static final Supplier<DataComponentType<Boolean>> SUPERCHARGED = REGISTRY.registerComponentType("supercharged", builder -> builder.networkSynchronized(ByteBufCodecs.BOOL).persistent(Codec.BOOL));
+    public static final Supplier<DataComponentType<Boolean>> USING_ABILITY = REGISTRY.registerComponentType("using_ability", builder -> builder.networkSynchronized(ByteBufCodecs.BOOL));
 
     public static final Supplier<DataComponentType<Integer>> HEXBLADE_ASPECT = REGISTRY.registerComponentType("hexblade_aspect", builder -> builder.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.INT));
     public static final Supplier<DataComponentType<Integer>> NEXT_HEXBLADE_ASPECT = REGISTRY.registerComponentType("next_hexblade_aspect", builder -> builder.networkSynchronized(ByteBufCodecs.INT).persistent(Codec.INT));

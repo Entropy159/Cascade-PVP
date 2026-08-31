@@ -140,5 +140,6 @@ public class CascadePVP {
         REGISTRATE.configLang(ServerConfig.KINGS_WILL_COOLDOWN, "Cooldown");
         REGISTRATE.configLang("hexblade", "Hexblade");
         REGISTRATE.configLang("abyssalImpact", "Abyssal Impact");
+        REGISTRATE.configLang("executionersBlade", "Executioner's Blade");
     }
 }

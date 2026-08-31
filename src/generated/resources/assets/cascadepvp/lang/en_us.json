@@ -1,5 +1,6 @@
 {
   "cascadepvp.configuration.abyssalImpact": "Abyssal Impact",
+  "cascadepvp.configuration.executionersBlade": "Executioner's Blade",
   "cascadepvp.configuration.hexblade": "Hexblade",
   "cascadepvp.configuration.hexblade.Fireball": "Fireball",
   "cascadepvp.configuration.hexblade.Fireball.cooldown": "Cooldown",
@@ -59,6 +60,8 @@
   "item.cascadepvp.boombow_template": "Sparky Sparky Boom Bow Template",
   "item.cascadepvp.bow_of_the_galadhrim": "Bow Of The Galadhrim",
   "item.cascadepvp.bow_of_the_galadhrim_template": "Bow Of The Galadhrim Template",
+  "item.cascadepvp.executioners_blade": "Executioner's Blade",
+  "item.cascadepvp.executioners_blade_template": "Executioner's Blade Template",
   "item.cascadepvp.hexblade": "Hexblade",
   "item.cascadepvp.hexblade_template": "Hexblade Template",
   "item.cascadepvp.kings_will": "King's Will",

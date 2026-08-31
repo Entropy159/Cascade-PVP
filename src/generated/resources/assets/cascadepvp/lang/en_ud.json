@@ -1,5 +1,6 @@
 {
   "cascadepvp.configuration.abyssalImpact": "ʇɔɐdɯI ןɐssʎqⱯ",
+  "cascadepvp.configuration.executionersBlade": "ǝpɐןᗺ s,ɹǝuoıʇnɔǝxƎ",
   "cascadepvp.configuration.hexblade": "ǝpɐןqxǝH",
   "cascadepvp.configuration.hexblade.Fireball": "ןןɐqǝɹıℲ",
   "cascadepvp.configuration.hexblade.Fireball.cooldown": "uʍopןooƆ",
@@ -59,6 +60,8 @@
   "item.cascadepvp.boombow_template": "ǝʇɐןdɯǝ⟘ ʍoᗺ ɯooᗺ ʎʞɹɐdS ʎʞɹɐdS",
   "item.cascadepvp.bow_of_the_galadhrim": "ɯıɹɥpɐןɐ⅁ ǝɥ⟘ ɟO ʍoᗺ",
   "item.cascadepvp.bow_of_the_galadhrim_template": "ǝʇɐןdɯǝ⟘ ɯıɹɥpɐןɐ⅁ ǝɥ⟘ ɟO ʍoᗺ",
+  "item.cascadepvp.executioners_blade": "ǝpɐןᗺ s,ɹǝuoıʇnɔǝxƎ",
+  "item.cascadepvp.executioners_blade_template": "ǝʇɐןdɯǝ⟘ ǝpɐןᗺ s,ɹǝuoıʇnɔǝxƎ",
   "item.cascadepvp.hexblade": "ǝpɐןqxǝH",
   "item.cascadepvp.hexblade_template": "ǝʇɐןdɯǝ⟘ ǝpɐןqxǝH",
   "item.cascadepvp.kings_will": "ןןıM s,buıʞ",

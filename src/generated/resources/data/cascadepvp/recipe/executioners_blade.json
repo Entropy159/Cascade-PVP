@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": [],
+  "base": {
+    "item": "minecraft:diamond_sword"
+  },
+  "result": {
+    "count": 1,
+    "id": "cascadepvp:executioners_blade"
+  },
+  "template": {
+    "item": "cascadepvp:executioners_blade_template"
+  }
+}

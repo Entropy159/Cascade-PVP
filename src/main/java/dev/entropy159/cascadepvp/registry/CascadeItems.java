@@ -34,6 +34,7 @@ public class CascadeItems {
     public static final ItemEntry<Item> ABYSSAL_IMPACT_TEMPLATE = REGISTRATE.item("abyssal_impact_template", Item::new).recipe(template(Items.BREEZE_ROD, Items.IRON_BLOCK)).register();
     public static final ItemEntry<Item> BOOMBOW_TEMPLATE = REGISTRATE.item("boombow_template", Item::new).lang("Sparky Sparky Boom Bow Template").recipe(template(Items.TNT, Items.OBSIDIAN)).register();
     public static final ItemEntry<Item> BOW_OF_THE_GALADHRIM_TEMPLATE = REGISTRATE.item("bow_of_the_galadhrim_template", Item::new).recipe(template(Items.SPYGLASS, Items.WIND_CHARGE)).register();
+    public static final ItemEntry<Item> EXECUTIONERS_BLADE_TEMPLATE = REGISTRATE.item("executioners_blade_template", Item::new).lang("Executioner's Blade Template").recipe(template(Items.SOUL_TORCH, Items.ENDER_PEARL)).register();
 
     public static final ItemEntry<HexbladeItem> HEXBLADE = REGISTRATE.item("hexblade", HexbladeItem::new).model(existing()).color(() -> () -> (stack, index) -> switch (index) {
         case 1 -> HexbladeItem.getAspectColor(stack);
@@ -43,21 +44,27 @@ public class CascadeItems {
     public static final ItemEntry<ReaperScytheItem> REAPER_SCYTHE = REGISTRATE.item("reaper_scythe", ReaperScytheItem::new).model(existing()).recipe(upgrade(Items.DIAMOND_SWORD, REAPER_SCYTHE_TEMPLATE)).tag(ItemTags.SWORDS).register();
     public static final ItemEntry<KingsWillItem> KINGS_WILL = REGISTRATE.item("kings_will", KingsWillItem::new).lang("King's Will").model(handheld()).recipe(upgrade(Items.DIAMOND_SWORD, KINGS_WILL_TEMPLATE)).tag(ItemTags.SWORDS).register();
     public static final ItemEntry<ShadowKarambitItem> SHADOW_KARAMBIT = REGISTRATE.item("shadow_karambit", ShadowKarambitItem::new).model(existing()).recipe(upgrade(Items.DIAMOND_SWORD, SHADOW_KARAMBIT_TEMPLATE)).tag(ItemTags.SWORDS).register();
-    public static final ItemEntry<AbyssalImpactItem> ABYSSAL_IMPACT = REGISTRATE.item("abyssal_impact", AbyssalImpactItem::new).model((ctx, provider) -> {
-        float scale = 1.3f;
-        provider.handheld(ctx::get).transforms()
-                .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND).rotation(0, -90, 55).scale(scale, scale, scale).translation(0, 8.5f, -0.5f).end()
-                .transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND).rotation(0, 90, -55).scale(scale, scale, scale).translation(0, 8.5f, -0.5f).end()
-                .transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND).rotation(0, 90, -25).scale(scale, scale, scale).translation(1.13f, 3.2f, 1.13f).end()
-                .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND).rotation(0, -90, 25).scale(scale, scale, scale).translation(1.13f, 3.2f, 1.13f).end()
-                .end();
-    }).recipe(upgrade(Items.DIAMOND_AXE, ABYSSAL_IMPACT_TEMPLATE)).tag(ItemTags.AXES, ItemTags.MACE_ENCHANTABLE, ItemTags.FIRE_ASPECT_ENCHANTABLE).register();
+    public static final ItemEntry<AbyssalImpactItem> ABYSSAL_IMPACT = REGISTRATE.item("abyssal_impact", AbyssalImpactItem::new).model(scaledHandheld(1.3f)).recipe(upgrade(Items.DIAMOND_AXE, ABYSSAL_IMPACT_TEMPLATE)).tag(ItemTags.AXES, ItemTags.MACE_ENCHANTABLE, ItemTags.FIRE_ASPECT_ENCHANTABLE).register();
     public static final ItemEntry<BoombowItem> BOOMBOW = REGISTRATE.item("boombow", BoombowItem::new).model(bow()).recipe(upgrade(Items.BOW, BOOMBOW_TEMPLATE)).lang("Sparky Sparky Boom Bow").tag(Tags.Items.TOOLS_BOW, ItemTags.BOW_ENCHANTABLE, ItemTags.DURABILITY_ENCHANTABLE).register();
     public static final ItemEntry<BowOfTheGaladhrim> BOW_OF_THE_GALADHRIM = REGISTRATE.item("bow_of_the_galadhrim", BowOfTheGaladhrim::new).model(bowOverlay()).color(() -> () -> (stack, index) -> (index == 1 && stack.getOrDefault(CascadeDataComponents.SUPERCHARGED, false)) ? 0xFFFF0000 : 0xFF757575).recipe(template(Items.SPYGLASS, Items.WIND_CHARGE)).recipe(upgrade(Items.BOW, BOW_OF_THE_GALADHRIM_TEMPLATE)).tag(Tags.Items.TOOLS_BOW, ItemTags.BOW_ENCHANTABLE, ItemTags.DURABILITY_ENCHANTABLE).register();
+    public static final ItemEntry<ExecutionersBladeItem> EXECUTIONERS_BLADE = REGISTRATE.item("executioners_blade", ExecutionersBladeItem::new).model(scaledMovedHandheld(1.5f, 1.2f)).lang("Executioner's Blade").recipe(upgrade(Items.DIAMOND_SWORD, EXECUTIONERS_BLADE_TEMPLATE)).tag(ItemTags.SWORDS).register();
 
     public static final ItemEntry<RiftwandItem> RIFTWAND = REGISTRATE.item("riftwand", RiftwandItem::new).model(handheld()).recipe(shaped(RecipeCategory.TOOLS, RegistrateRecipeProvider.has(Tags.Items.GEMS_AMETHYST), "  D", " A ", "A  ", new Tuple<>('D', Ingredient.of(Tags.Items.GEMS_DIAMOND)), new Tuple<>('A', Ingredient.of(Tags.Items.GEMS_AMETHYST)))).register();
 
     public static void init() {
+    }
+
+    private static <T extends Item> NonNullBiConsumer<DataGenContext<Item, T>, RegistrateItemModelProvider> scaledMovedHandheld(float scale, float y) {
+        return (ctx, provider) -> provider.handheld(ctx::get).transforms()
+                .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND).rotation(0, -90, 55).scale(scale, scale, scale).translation(0, 8.5f + y, -0.5f).end()
+                .transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND).rotation(0, 90, -55).scale(scale, scale, scale).translation(0, 8.5f + y, -0.5f).end()
+                .transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND).rotation(0, 90, -25).scale(scale, scale, scale).translation(1.13f, 3.2f + y, 1.13f).end()
+                .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND).rotation(0, -90, 25).scale(scale, scale, scale).translation(1.13f, 3.2f + y, 1.13f).end()
+                .end();
+    }
+
+    private static <T extends Item> NonNullBiConsumer<DataGenContext<Item, T>, RegistrateItemModelProvider> scaledHandheld(float scale) {
+        return scaledMovedHandheld(scale, 0);
     }
 
     private static <T extends Item> NonNullBiConsumer<DataGenContext<Item, T>, RegistrateItemModelProvider> handheld() {
