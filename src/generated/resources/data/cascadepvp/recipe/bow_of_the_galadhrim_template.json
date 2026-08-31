@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "A": {
+      "item": "minecraft:spyglass"
+    },
+    "B": {
+      "item": "minecraft:wind_charge"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "pattern": [
+    "DDD",
+    "ADB",
+    "DDD"
+  ],
+  "result": {
+    "count": 1,
+    "id": "cascadepvp:bow_of_the_galadhrim_template"
+  }
+}
