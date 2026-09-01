@@ -12,15 +12,16 @@ import java.io.IOException;
 
 public final class CascadeRenderTypes {
     public static ShaderInstance REALITY_TEAR_SHADER;
-
     public static final RenderType REALITY_TEAR = createRealityTear();
+    public static final VertexFormat REALITY_TEAR_FORMAT = DefaultVertexFormat.POSITION_TEX_COLOR;
 
     public static void registerShaders(RegisterShadersEvent event) throws IOException {
-        event.registerShader(new ShaderInstance(event.getResourceProvider(), CascadePVP.id("reality_tear"), DefaultVertexFormat.POSITION_TEX_COLOR), shader -> REALITY_TEAR_SHADER = shader);
+        event.registerShader(new ShaderInstance(event.getResourceProvider(), CascadePVP.id("reality_tear"), REALITY_TEAR_FORMAT), shader -> REALITY_TEAR_SHADER = shader);
     }
 
     private static RenderType createRealityTear() {
-        RenderType.CompositeState state = RenderType.CompositeState.builder().setShaderState(new RenderStateShard.ShaderStateShard(() -> REALITY_TEAR_SHADER)).setTransparencyState(RenderStateShard.TRANSLUCENT_TRANSPARENCY).setDepthTestState(RenderStateShard.NO_DEPTH_TEST).setCullState(RenderStateShard.NO_CULL).setLightmapState(RenderStateShard.NO_LIGHTMAP).setOverlayState(RenderStateShard.NO_OVERLAY).createCompositeState(false);
-        return RenderType.create("reality_tear", DefaultVertexFormat.POSITION_TEX_COLOR, VertexFormat.Mode.TRIANGLE_STRIP, 256, state);
+        RenderType.CompositeState state = RenderType.CompositeState.builder().setShaderState(new RenderStateShard.ShaderStateShard(() -> REALITY_TEAR_SHADER)).setTransparencyState(RenderStateShard.TRANSLUCENT_TRANSPARENCY).setDepthTestState(RenderStateShard.NO_DEPTH_TEST).setLightmapState(RenderStateShard.NO_LIGHTMAP).setOverlayState(RenderStateShard.NO_OVERLAY).createCompositeState(false);
+        assert REALITY_TEAR_FORMAT != null;
+        return RenderType.create("reality_tear", REALITY_TEAR_FORMAT, VertexFormat.Mode.TRIANGLE_STRIP, 256, state);
     }
 }

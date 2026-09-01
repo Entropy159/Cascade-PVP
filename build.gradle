@@ -94,6 +94,8 @@ dependencies {
 
     localRuntime "maven.modrinth:punchy-fpa:${punchy_version}-neoforge,${minecraft_version}"
     localRuntime "maven.modrinth:emi:1.1.24+1.21.1+neoforge"
+    localRuntime "maven.modrinth:sodium:mc1.21.1-0.6.13-neoforge"
+    localRuntime "maven.modrinth:iris:1.8.12+1.21.1-neoforge"
 }
 
 
