@@ -45,10 +45,12 @@ public class ServerConfig {
     public static final ModConfigSpec.BooleanValue LESS_MOB_GRIEFING = BUILDER.comment("If enabled, creepers, endermen, and ghasts won't do damage to blocks").define("lessMobGriefing", true);
     public static final ModConfigSpec.IntValue REALITY_TEAR_REMOVE_DELAY = BUILDER.comment("The delay in ticks before removing a reality tear").defineInRange("realityTearRemoveDelay", 100, 0, 20000);
 
-    public static ModConfigSpec getSpec() {
+    public static final ModConfigSpec SPEC;
+
+    static {
         for (var aspect : HexbladeItem.ASPECTS) {
             aspect.registerConfigs(BUILDER);
         }
-        return BUILDER.build();
+        SPEC = BUILDER.build();
     }
 }

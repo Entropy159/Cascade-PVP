@@ -5,6 +5,7 @@ import com.mojang.blaze3d.pipeline.TextureTarget;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import dev.entropy159.cascadepvp.CascadePVP;
+import dev.entropy159.cascadepvp.config.ClientConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.AbstractTexture;
 import net.minecraft.resources.ResourceLocation;
@@ -15,7 +16,6 @@ import org.joml.Matrix4fStack;
 
 public class FractalManager {
     public static final int TYPES = 4;
-    private static final int RESOLUTION = 512;
     private static final RenderTarget[] fractalTargets = new RenderTarget[TYPES];
 
     public static void init() {
@@ -29,7 +29,8 @@ public class FractalManager {
         if (target != null) {
             target.destroyBuffers();
         }
-        target = new TextureTarget(RESOLUTION, RESOLUTION, true, Minecraft.ON_OSX);
+        int resolution = ClientConfig.REALITY_TEAR_RESOLUTION.get();
+        target = new TextureTarget(resolution, resolution, true, Minecraft.ON_OSX);
         target.setClearColor(0, 0, 0, 0);
         fractalTargets[type] = target;
     }
@@ -50,7 +51,11 @@ public class FractalManager {
     public static void renderFractalToTexture(int type, float partialTick) {
         var fractalTarget = getTarget(type);
 
-        RenderSystem.viewport(0, 0, RESOLUTION, RESOLUTION);
+        int resolution = ClientConfig.REALITY_TEAR_RESOLUTION.get();
+        if (resolution != fractalTarget.width) {
+            fractalTarget.resize(resolution, resolution, Minecraft.ON_OSX);
+        }
+        RenderSystem.viewport(0, 0, fractalTarget.width, fractalTarget.height);
         fractalTarget.clear(Minecraft.ON_OSX);
         fractalTarget.bindWrite(true);
 

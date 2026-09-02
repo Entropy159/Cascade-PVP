@@ -2,6 +2,7 @@ package dev.entropy159.cascadepvp;
 
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.logging.LogUtils;
+import dev.entropy159.cascadepvp.config.ClientConfig;
 import dev.entropy159.cascadepvp.config.ServerConfig;
 import dev.entropy159.cascadepvp.dimensions.QuantumDimension;
 import dev.entropy159.cascadepvp.entities.RealityTearEntity;
@@ -64,7 +65,8 @@ public class CascadePVP {
 
         addLang();
 
-        container.registerConfig(ModConfig.Type.SERVER, ServerConfig.getSpec());
+        container.registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC);
+        container.registerConfig(ModConfig.Type.SERVER, ServerConfig.SPEC);
     }
 
     @SubscribeEvent
