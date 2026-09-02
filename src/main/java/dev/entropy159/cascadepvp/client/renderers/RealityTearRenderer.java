@@ -1,7 +1,7 @@
 package dev.entropy159.cascadepvp.client.renderers;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import dev.entropy159.cascadepvp.client.rendertypes.FractalManager;
+import dev.entropy159.cascadepvp.client.FractalManager;
 import dev.entropy159.cascadepvp.entities.RealityTearEntity;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;

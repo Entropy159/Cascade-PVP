@@ -2,8 +2,7 @@ package dev.entropy159.cascadepvp.client;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import dev.entropy159.cascadepvp.CascadePVP;
-import dev.entropy159.cascadepvp.client.rendertypes.CascadeRenderTypes;
-import dev.entropy159.cascadepvp.client.rendertypes.FractalManager;
+import dev.entropy159.cascadepvp.config.ClientConfig;
 import dev.entropy159.cascadepvp.items.CascadeItem;
 import dev.entropy159.cascadepvp.network.toServer.AbilityPacket;
 import dev.entropy159.cascadepvp.registry.CascadeItems;
@@ -20,7 +19,9 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.neoforge.client.event.*;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
+import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
+import net.neoforged.neoforge.client.event.RenderPlayerEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.client.settings.KeyConflictContext;
@@ -28,8 +29,6 @@ import net.neoforged.neoforge.common.util.Lazy;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.lwjgl.glfw.GLFW;
-
-import java.io.IOException;
 
 @Mod(value = CascadePVP.MODID, dist = Dist.CLIENT)
 @EventBusSubscriber(modid = CascadePVP.MODID, value = Dist.CLIENT)
@@ -47,6 +46,7 @@ public class CascadePVPClient {
 
     public CascadePVPClient(ModContainer container) {
         container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
+        FractalManager.init();
     }
 
     @SubscribeEvent
@@ -55,18 +55,6 @@ public class CascadePVPClient {
         ItemProperties.register(CascadeItems.BOOMBOW.get(), ResourceLocation.withDefaultNamespace("pulling"), BOW_PULLING);
         ItemProperties.register(CascadeItems.BOW_OF_THE_GALADHRIM.get(), ResourceLocation.withDefaultNamespace("pull"), BOW_PULL);
         ItemProperties.register(CascadeItems.BOW_OF_THE_GALADHRIM.get(), ResourceLocation.withDefaultNamespace("pulling"), BOW_PULLING);
-
-        event.enqueueWork(() -> {
-            FractalManager.init();
-            FractalManager.registerDynamicTextures();
-        });
-    }
-
-    @SubscribeEvent
-    public static void renderLevel(RenderLevelStageEvent event) {
-        if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_SKY) {
-            FractalManager.renderFractals(event.getPartialTick().getGameTimeDeltaPartialTick(true));
-        }
     }
 
     @SubscribeEvent
@@ -90,6 +78,8 @@ public class CascadePVPClient {
                 item.utilityClient(player, player.getMainHandItem());
             }
         }
+        int size = ClientConfig.REALITY_TEAR_RESOLUTION.get();
+        FractalManager.FBOS.forEach(fbo -> fbo.resize(size, size));
     }
 
     @SubscribeEvent
@@ -97,15 +87,6 @@ public class CascadePVPClient {
         var player = Minecraft.getInstance().player;
         if (player != null && player.hasEffect(CascadePotions.INVERSE_INVISIBILITY) && event.getEntity() != player) {
             event.setCanceled(true);
-        }
-    }
-
-    @SubscribeEvent
-    public static void renderTypes(RegisterShadersEvent event) {
-        try {
-            CascadeRenderTypes.registerShaders(event);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 

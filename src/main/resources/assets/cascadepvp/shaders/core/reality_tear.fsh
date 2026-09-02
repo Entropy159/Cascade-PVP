@@ -1,6 +1,7 @@
 #version 150
 
 uniform float GameTime;
+uniform float TearStyle;
 
 in vec4 vertexColor;
 in vec2 texCoord0;
@@ -91,8 +92,6 @@ void main() {
     vec2 z = (2.0 * texCoord0 - 1.0) * 1.6;
     vec2 coord = z;
     float alpha = 0.0;
-
-    float TearStyle = vertexColor.a * 4.0;
 
     if (TearStyle <= 0) { //Zubieta
         vec2 c = vec2(sin(iTime / 3.) * 4., cos(iTime) * 2.) / 10.;
