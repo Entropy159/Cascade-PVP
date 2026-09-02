@@ -55,7 +55,7 @@ public class RealityTearEntity extends Entity {
         if (!level.getEntities((Entity) null, new AABB(pos), e -> e instanceof RealityTearEntity).isEmpty()) {
             return false;
         }
-        int color = owner == null ? DEFAULT_COLOR : owner.getTeamColor();
+        int color = owner == null || owner.getTeam() == null ? DEFAULT_COLOR : owner.getTeamColor();
         int delay = ServerConfig.RIFTWAND_SPAWN_DELAY.get();
         Vec3 center = pos.getCenter();
         AtomicInteger timer = new AtomicInteger();
@@ -102,7 +102,7 @@ public class RealityTearEntity extends Entity {
 
     @Override
     public @NotNull InteractionResult interact(@NotNull Player p, @NotNull InteractionHand hand) {
-        if (p instanceof ServerPlayer player) {
+        if (p instanceof ServerPlayer player && hand == InteractionHand.MAIN_HAND) {
             if (player.getItemInHand(hand).getItem() instanceof RiftwandItem && player.isCrouching()) {
                 removeTimer = ServerConfig.REALITY_TEAR_REMOVE_DELAY.get();
                 return InteractionResult.SUCCESS;
@@ -124,7 +124,7 @@ public class RealityTearEntity extends Entity {
     @Override
     public void tick() {
         super.tick();
-        if (level().isClientSide()) {
+        if (!level().isClientSide()) {
             if (removeTimer > 0) {
                 removeTimer--;
                 if (level() instanceof ServerLevel level) {
