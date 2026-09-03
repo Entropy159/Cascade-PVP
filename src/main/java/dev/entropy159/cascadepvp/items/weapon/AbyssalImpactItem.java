@@ -40,8 +40,6 @@ public class AbyssalImpactItem extends AxeItem implements CascadeItem {
             var velocity = new Vec3(flatLook.x, up * power, flatLook.z);
             player.push(velocity);
             player.connection.send(new ClientboundSetEntityMotionPacket(player));
-            player.setIgnoreFallDamageFromCurrentImpulse(true);
-            player.currentImpulseContextResetGraceTime = ServerConfig.ABYSSAL_IMPACT_FALL_REDUCTION_TICKS.get();
             return ServerConfig.ABYSSAL_IMPACT_COOLDOWN.get();
         }
         return 0;

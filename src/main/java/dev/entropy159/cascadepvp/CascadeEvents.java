@@ -4,6 +4,7 @@ import dev.entropy159.cascadepvp.config.ServerConfig;
 import dev.entropy159.cascadepvp.dimensions.QuantumDimension;
 import dev.entropy159.cascadepvp.entities.projectile.MagicMissileProjectile;
 import dev.entropy159.cascadepvp.items.CascadeItem;
+import dev.entropy159.cascadepvp.items.weapon.AbyssalImpactItem;
 import dev.entropy159.cascadepvp.items.weapon.ReaperScytheItem;
 import dev.entropy159.cascadepvp.network.toClient.WorldSeedPacket;
 import dev.entropy159.cascadepvp.registry.CascadeGameRules;
@@ -24,6 +25,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityMobGriefingEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
+import net.neoforged.neoforge.event.entity.living.LivingFallEvent;
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
@@ -105,6 +107,13 @@ public class CascadeEvents {
                     return;
                 }
             }
+        }
+    }
+
+    @SubscribeEvent
+    public static void entityFall(LivingFallEvent event) {
+        if (event.getEntity().getMainHandItem().getItem() instanceof AbyssalImpactItem) {
+            event.setCanceled(true);
         }
     }
 }
