@@ -40,7 +40,8 @@ public class ServerConfig {
     public static final ModConfigSpec.IntValue BOOMBOW_DELAY_TICKS = BUILDER.comment("The delay in ticks before an arrow explodes on impact").defineInRange("boombow.delay", 20, 0, 20000);
 
     public static final ModConfigSpec.IntValue MAX_HEALTH = BUILDER.comment("Players' max health will be set to this value").defineInRange("maxHealth", 40, 1, 2000);
-    public static final ModConfigSpec.IntValue RIFTWAND_SPAWN_DELAY = BUILDER.comment("The delay in ticks between using a Riftwand and a Reality Tear spawning").defineInRange("riftwand.delay", 5 * 20, 0, 20000);
+    public static final ModConfigSpec.IntValue RIFTWAND_SPAWN_DELAY = BUILDER.comment("The delay in ticks between using a Riftwand and a Reality Tear spawning").defineInRange("riftwand.spawnDelay", 5 * 20, 0, 20000);
+    public static final ModConfigSpec.IntValue RIFTWAND_COOLDOWN = BUILDER.comment("The cooldown for the Riftwand").defineInRange("riftwand.cooldown", 20 * 20, 0, 20000);
     public static final ModConfigSpec.BooleanValue LESS_MOB_GRIEFING = BUILDER.comment("If enabled, creepers, endermen, and ghasts won't do damage to blocks").define("lessMobGriefing", true);
     public static final ModConfigSpec.IntValue REALITY_TEAR_REMOVE_DELAY = BUILDER.comment("The delay in ticks before removing a reality tear").defineInRange("realityTearRemoveDelay", 100, 0, 20000);
 

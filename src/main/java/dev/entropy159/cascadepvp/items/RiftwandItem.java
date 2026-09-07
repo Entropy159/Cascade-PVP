@@ -1,5 +1,6 @@
 package dev.entropy159.cascadepvp.items;
 
+import dev.entropy159.cascadepvp.config.ServerConfig;
 import dev.entropy159.cascadepvp.entities.RealityTearEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -27,7 +28,7 @@ public class RiftwandItem extends Item {
                             if (!player.getAbilities().instabuild) {
                                 player.getInventory().getItem(slot).consume(1, player);
                             }
-                            player.getCooldowns().addCooldown(context.getItemInHand().getItem(), 60 * 20);
+                            player.getCooldowns().addCooldown(context.getItemInHand().getItem(), ServerConfig.RIFTWAND_COOLDOWN.get());
                             return InteractionResult.SUCCESS_NO_ITEM_USED;
                         } else {
                             return InteractionResult.FAIL;
